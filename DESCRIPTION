@@ -1,14 +1,17 @@
-Package: dnacycp2
-Title: Predicts DNA cyclizability for sequences/subsequences of length 50
+Package: DNAcycP2
+Title: DNA Cyclizability Prediction
 Version: 0.99.0
 Authors@R: 
     person("Brody", "Kendall", 
         email = "curtiskendall2025@u.northwestern.edu", 
         role = c("aut"))
+    person("Keren", "Li",
+        email = "kli@uab.edu",
+        role = c("aut"))
     person("Ji-Ping", "Wang", 
         email = "jzwang@northwestern.edu", 
         role = c("aut", "cre"))
-Description: Predicts DNA cyclizability for sequences/subsequences of length 50
+Description: This package performs prediction of intrinsic cyclizability of of every 50-bp subsequence in a DNA sequence.
 Imports:
   basilisk,
   reticulate
