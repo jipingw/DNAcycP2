@@ -7,7 +7,7 @@ DNAcycP2 R package
 
 **Cite DNAcycP2 package**:
 
-TODO: Update citation when applicable
+Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, 2025
 
 
 ## What is DNAcycP2?
