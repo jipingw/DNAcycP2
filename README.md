@@ -92,7 +92,7 @@ We provide two simple example files with the package to show proper usage:
 ### Example 1: fasta file input
 
 ```r
-ex1_file <- system.file("data", "ex1.fasta", package = "DNAcycP2")
+ex1_file <- system.file("extdata", "ex1.fasta", package = "DNAcycP2")
 ex1_smooth <- DNAcycP2::cycle_fasta(ex1_file,smooth=TRUE,n_cores=2,chunk_length=1000)
 ex1_original <- DNAcycP2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_length=1000)
 ```
@@ -102,7 +102,7 @@ ex1_original <- DNAcycP2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_leng
 ### Example 2: txt file input
 
 ```r
-ex2_file <- system.file("data", "ex2.txt", package = "DNAcycP2")
+ex2_file <- system.file("extdata", "ex2.txt", package = "DNAcycP2")
 ex2 <- read.csv(ex2_file, header = FALSE)
 ex2_smooth <- dnacycp::cycle(ex2$V1, smooth=TRUE)
 ex2_original <- dnacycp::cycle(ex2$V1, smooth=FALSE)

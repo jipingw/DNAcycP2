@@ -1,3 +1,5 @@
+utils::globalVariables("model_data")
+
 #' Predict Cyclizability
 #'
 #' This predicts cyclizability for a set of sequences.
@@ -15,16 +17,14 @@
 #' @importFrom basilisk basiliskStart basiliskRun basiliskStop
 #' @examples
 #' # Example usage of cycle
-#' cycle(sequences, smooth=TRUE) # where sequences is a list/vector of sequences
+#' cycle(c("ACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC"), smooth=TRUE)
+#' # where sequences is a list/vector of sequences
 cycle <- function(sequences, smooth, save_path_prefix="") {
     cl <- basiliskStart(env1)
     on.exit(basiliskStop(cl))
     preds <- basiliskRun(cl, fun=function(seqs) {
         path_to_python <- system.file("python", package = "DNAcycP2")
-        if (smooth) {
-            irlstm <- system.file("python/irlstm_smooth", package = "DNAcycP2")
-        }
-        else { irlstm <- system.file("python/irlstm", package = "DNAcycP2") }
+        irlstm <- restore_model_dir(smooth)
         X <- reticulate::import_from_path(
             "dnacycp_python", path = path_to_python)
         if (inherits(sequences, "AAStringSet") |
@@ -91,16 +91,23 @@ cycle <- function(sequences, smooth, save_path_prefix="") {
 #' predictions on a normalized scale), and c_score_unnorm (predictions on an
 #' unnormalized scale).
 #'
-#' Each list item is named "cycle_{id}" corresponding to the fasta id
+#' Each list item is named "cycle_$id$" corresponding to the fasta id
 #' @export
 #' @importFrom reticulate import_from_path
 #' @importFrom basilisk basiliskStart basiliskRun basiliskStop
+#' @importFrom utils write.csv
+#'
 #' @examples
+#' # Create a temporary file
+#' temp_file <- tempfile(fileext = ".fasta")
+#' writeLines(">1", temp_file)
+#' writeLines("ACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC", temp_file)
+#'
 #' # Example usage of cycle_fasta
-#' cycle_fasta(
-#'     "path/to/fasta/file.fasta",smooth=TRUE, n_cores=2, chunk_length=50000,
-#'     save_path_prefix="path/to/output_files"
-#' )
+#' cycle_fasta(temp_file, smooth=TRUE)
+#'
+#' # Cleanup
+#' unlink(temp_file)
 cycle_fasta <- function(file_path, smooth, n_cores=1, chunk_length=100000,
                         save_path_prefix="") {
     cl <- basiliskStart(env1)
@@ -108,12 +115,7 @@ cycle_fasta <- function(file_path, smooth, n_cores=1, chunk_length=100000,
 
     preds <- basiliskRun(cl, fun=function(input_file) {
         path_to_python <- system.file("python", package = "DNAcycP2")
-        if (smooth) {
-            irlstm <- system.file("python/irlstm_smooth", package = "DNAcycP2")
-        }
-        else {
-            irlstm <- system.file("python/irlstm", package = "DNAcycP2")
-        }
+        irlstm <- restore_model_dir(smooth)
         X <- reticulate::import_from_path(
             "dnacycp_python", path = path_to_python
         )
@@ -135,4 +137,28 @@ cycle_fasta <- function(file_path, smooth, n_cores=1, chunk_length=100000,
     }
 
     preds
+}
+
+
+
+restore_model_dir <- function(smooth) {
+    if (smooth) {
+        load(system.file("extdata/irlstm_smooth.rda", package = "DNAcycP2"))
+        model_dir <- file.path(tempdir(), "irlstm_smooth")
+    }
+    else {
+        load(system.file("extdata/irlstm.rda", package = "DNAcycP2"))
+        model_dir <- file.path(tempdir(), "irlstm")
+    }
+
+    dir.create(model_dir, recursive = TRUE, showWarnings = FALSE)
+
+    # Reconstruct files from raw data
+    for (rel_path in names(model_data)) {
+        out_file <- file.path(model_dir, rel_path)
+        dir.create(dirname(out_file), recursive = TRUE, showWarnings = FALSE)
+        writeBin(model_data[[rel_path]], out_file)
+    }
+
+    return(model_dir)
 }

@@ -34,7 +34,7 @@ Each list item has the following columns: position, c_score_norm (
 predictions on a normalized scale), and c_score_unnorm (predictions on an
 unnormalized scale).
 
-Each list item is named "cycle_{id}" corresponding to the fasta id
+Each list item is named "cycle_$id$" corresponding to the fasta id
 }
 \description{
 This predicts cyclizability for all subsequences of length 50bp from a
@@ -44,9 +44,14 @@ This predicts cyclizability for all subsequences of length 50bp from a
 Optionally, saves output files (use argument 'save_path_prefix')
 }
 \examples{
+# Create a temporary file
+temp_file <- tempfile(fileext = ".fasta")
+writeLines(">1", temp_file)
+writeLines("ACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC", temp_file)
+
 # Example usage of cycle_fasta
-cycle_fasta(
-    "path/to/fasta/file.fasta",smooth=TRUE, n_cores=2, chunk_length=50000,
-    save_path_prefix="path/to/output_files"
-)
+cycle_fasta(temp_file, smooth=TRUE)
+
+# Cleanup
+unlink(temp_file)
 }

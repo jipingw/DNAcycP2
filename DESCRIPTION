@@ -12,8 +12,8 @@ Authors@R:
         email = "jzwang@northwestern.edu", 
         role = c("aut", "cre"),
         comment = c(ORCID="0000-0002-8398-939X"))
-Maintainer: Ji-Ping Wang <jzwang@northwestern.edu>
 Description: This package performs prediction of intrinsic cyclizability of of every 50-bp subsequence in a DNA sequence.
+Depends: R (>= 4.4.0)
 Imports:
   basilisk,
   reticulate
@@ -21,11 +21,11 @@ License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-StagedInstall: no
-BinaryFiles: inst/python/irlstm/saved_model.pb, inst/python/irlstm_smooth/saved_model.pb
+StagedInstall: yes
+BinaryFiles: inst/extdata/irlstm/saved_model.pb, inst/extdata/irlstm_smooth/saved_model.pb
 biocViews: NeuralNetwork, StructuralPrediction
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown
+Suggests: knitr, rmarkdown, BiocGenerics
 LazyData: false
 URL:
-BugReports:
+BugReports: https://github.com/jipingw/DNAcycP2

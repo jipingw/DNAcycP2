@@ -145,7 +145,7 @@ library(DNAcycP2)
 ### Example 1: fasta file input
 
 ```{r}
-ex1_file <- system.file("data", "ex1.fasta", package = "DNAcycP2")
+ex1_file <- system.file("extdata", "ex1.fasta", package = "DNAcycP2")
 ex1_smooth <- DNAcycP2::cycle_fasta(
     ex1_file, smooth=TRUE, n_cores=1, chunk_length=1000
 )
@@ -177,7 +177,7 @@ second and third columns are `C0S_norm` and `C0S_unnorm`, and when
 
 
 ```{r}
-ex2_file <- system.file("data", "ex2.txt", package = "DNAcycP2")
+ex2_file <- system.file("extdata", "ex2.txt", package = "DNAcycP2")
 ex2 <- read.csv(ex2_file, header = FALSE)
 ex2_smooth <- DNAcycP2::cycle(ex2$V1, smooth=TRUE)
 ex2_original <- DNAcycP2::cycle(ex2$V1, smooth=FALSE)
@@ -261,7 +261,7 @@ First, we will consider the .fasta format:
 
 ```{r}
 ex3_fasta_file <- system.file(
-    "data", "ex3_single_seq.fasta", package = "DNAcycP2"
+    "extdata", "ex3_single_seq.fasta", package = "DNAcycP2"
 )
 ex3_fasta_smooth <- DNAcycP2::cycle_fasta(ex3_fasta_file,smooth=TRUE)
 ex3_fasta_original <- DNAcycP2::cycle_fasta(ex3_fasta_file,smooth=FALSE)
@@ -289,7 +289,11 @@ ex3_fasta_smooth$cycle_1[1:51,c("position", "C0S_norm")]
 Next, we will consider the .txt format:
 
 ```{r}
-ex3_txt_file <- system.file("data", "ex3_single_seq.txt", package = "DNAcycP2")
+ex3_txt_file <- system.file(
+    "extdata", 
+    "ex3_single_seq.txt", 
+    package = "DNAcycP2"
+)
 ex3_txt <- read.csv(ex3_txt_file, header = FALSE)
 ex3_txt_smooth <- DNAcycP2::cycle(ex3_txt$V1, smooth=TRUE)
 ex3_txt_original <- DNAcycP2::cycle(ex3_txt$V1, smooth=FALSE)

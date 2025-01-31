@@ -26,5 +26,6 @@ Optionally, saves output files (use argument 'save_path_prefix')
 }
 \examples{
 # Example usage of cycle
-cycle(sequences, smooth=TRUE) # where sequences is a list/vector of sequences
+cycle(c("ACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC"), smooth=TRUE)
+# where sequences is a list/vector of sequences
 }
