@@ -52,7 +52,7 @@ The core of DNAcycP2 is a deep learning architecture mixed with an Inception-Res
 Current best practice is to install via `devtools` and github:
 
 ```r
-devtools::install_github("brodykendall/dnacycp2-R")
+devtools::install_github("brodykendall/DNAcycP2")
 ```
 
 
@@ -92,9 +92,9 @@ We provide two simple example files with the package to show proper usage:
 ### Example 1: fasta file input
 
 ```r
-ex1_file <- system.file("data", "ex1.fasta", package = "dnacycp2")
-ex1_smooth <- dnacycp2::cycle_fasta(ex1_file,smooth=TRUE,n_cores=2,chunk_length=1000)
-ex1_original <- dnacycp2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_length=1000)
+ex1_file <- system.file("data", "ex1.fasta", package = "DNAcycP2")
+ex1_smooth <- DNAcycP2::cycle_fasta(ex1_file,smooth=TRUE,n_cores=2,chunk_length=1000)
+ex1_original <- DNAcycP2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_length=1000)
 ```
 
 `cycle_fasta` takes the file path as input (`ex1_file`). `smooth=TRUE` specifies that DNAcycP2 be used to make predictions. `smooth=FALSE` specifies that DNAcycP be used to make predictions. `n_cores=2` specifies that 2 cores are to be used in parallel. `chunk_length=1000` specifies that each core will predict on sequences of length 1000 at a given time.
@@ -102,7 +102,7 @@ ex1_original <- dnacycp2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_leng
 ### Example 2: txt file input
 
 ```r
-ex2_file <- system.file("data", "ex2.txt", package = "dnacycp2")
+ex2_file <- system.file("data", "ex2.txt", package = "DNAcycP2")
 ex2 <- read.csv(ex2_file, header = FALSE)
 ex2_smooth <- dnacycp::cycle(ex2$V1, smooth=TRUE)
 ex2_original <- dnacycp::cycle(ex2$V1, smooth=FALSE)

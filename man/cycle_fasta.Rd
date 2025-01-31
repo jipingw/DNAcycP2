@@ -4,31 +4,49 @@
 \alias{cycle_fasta}
 \title{Predict Cyclizability}
 \usage{
-cycle_fasta(file_path, smooth, n_cores = 1, chunk_length = 1e+05)
+cycle_fasta(
+  file_path,
+  smooth,
+  n_cores = 1,
+  chunk_length = 1e+05,
+  save_path_prefix = ""
+)
 }
 \arguments{
-\item{smooth}{Whether to predict smoothed C0 (DNAcycP2) or original C0 (DNAcycP)}
+\item{file_path}{.fasta input file path}
+
+\item{smooth}{Whether to predict smoothed C0 (DNAcycP2) or original C0
+(DNAcycP)}
 
 \item{n_cores}{Number of cores to use for parallel processing (default=1)}
 
-\item{chunk_length}{Length of sequence that each core will predict on at a given time.
+\item{chunk_length}{Length of sequence that each core will predict on at a
+given time.
 (default=100000)}
 
-\item{input_file}{.fasta input file path}
+\item{save_path_prefix}{Base path for output files. If it is an empty string,
+the output files will not be saved (default="")}
 }
 \value{
 A list of predictions for each ID in the .fasta file.
 
-Each list item has the following columns: position, c_score_norm (predictions
-on a normalized scale), and c_score_unnorm (predictions on an unnormalized
-scale).
+Each list item has the following columns: position, c_score_norm (
+predictions on a normalized scale), and c_score_unnorm (predictions on an
+unnormalized scale).
 
 Each list item is named "cycle_{id}" corresponding to the fasta id
 }
 \description{
-This predicts cyclizability for all subsequences of length 50bp from a .fasta input file.
+This predicts cyclizability for all subsequences of length 50bp from a
+.fasta input file.
+}
+\details{
+Optionally, saves output files (use argument 'save_path_prefix')
 }
 \examples{
 # Example usage of cycle_fasta
-cycle_fasta("path/to/fasta/file.fasta",smooth=TRUE, n_cores=2, chunk_length=50000)
+cycle_fasta(
+    "path/to/fasta/file.fasta",smooth=TRUE, n_cores=2, chunk_length=50000,
+    save_path_prefix="path/to/output_files"
+)
 }

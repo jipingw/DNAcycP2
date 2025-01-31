@@ -10,7 +10,8 @@ Authors@R:
         role = c("aut"))
     person("Ji-Ping", "Wang", 
         email = "jzwang@northwestern.edu", 
-        role = c("aut", "cre"))
+        role = c("aut", "cre"),
+        comment = c(ORCID="0000-0002-8398-939X"))
 Description: This package performs prediction of intrinsic cyclizability of of every 50-bp subsequence in a DNA sequence.
 Imports:
   basilisk,

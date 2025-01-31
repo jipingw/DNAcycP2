@@ -4,18 +4,25 @@
 \alias{cycle}
 \title{Predict Cyclizability}
 \usage{
-cycle(sequences, smooth)
+cycle(sequences, smooth, save_path_prefix = "")
 }
 \arguments{
 \item{sequences}{A list or vector of sequences}
 
-\item{smooth}{Whether to predict smoothed C0 (DNAcycP2) or original C0 (DNAcycP)}
+\item{smooth}{Whether to predict smoothed C0 (DNAcycP2) or original C0
+(DNAcycP)}
+
+\item{save_path_prefix}{Base path for output files. If it is an empty string,
+the output files will not be saved (default="")}
 }
 \value{
-A list of (1) predictions on a normalized scale, (2) predictions on an unnormalized scale
+A list of predictions for each input sequence.
 }
 \description{
 This predicts cyclizability for a set of sequences.
+}
+\details{
+Optionally, saves output files (use argument 'save_path_prefix')
 }
 \examples{
 # Example usage of cycle

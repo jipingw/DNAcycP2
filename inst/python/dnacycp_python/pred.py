@@ -114,7 +114,6 @@ def cycle_fasta(inputfile, folder_path, chunk_size, num_threads):
                 fit_reverse.append(fit_local_reverse)
                 
                 # Progress reporting for long sequences
-                sequences_processed = len(fit_local)
                 total_processed = sum(len(chunk) for chunk in fit)
                 if onehot_sequence.shape[0] > 10**7:
                     print(f"\t Completed predictions on {total_processed} out of {sequence_length} sequences", flush=True)
@@ -131,15 +130,17 @@ def cycle_fasta(inputfile, folder_path, chunk_size, num_threads):
         positions = np.arange(25, 25 + n)
         fitall = np.column_stack((positions, fit, fit2))
         if smooth:
-            fitall = pd.DataFrame(fitall, columns=["position", "C0S_score_norm", "C0S_score_unnorm"])
+            fitall = pd.DataFrame(fitall, columns=["position", "C0S_norm", "C0S_unnorm"])
         else:
-            fitall = pd.DataFrame(fitall, columns=["position", "C0_score_norm", "C0_score_unnorm"])
+            fitall = pd.DataFrame(fitall, columns=["position", "C0_norm", "C0_unnorm"])
         fitall = fitall.astype({"position": int})
         ret[f"cycle_{chrom}"] = fitall
     
     return ret
 
 def cycle(sequences, folder_path):
+    if type(sequences) == str:
+        sequences = [sequences]
     network_final = keras.models.load_model(folder_path)
     smooth = True if "smooth" in folder_path else False
     X = []
@@ -165,9 +166,9 @@ def cycle(sequences, folder_path):
             model_pred = detrend_int_original + (model_pred + model_pred_reverse) * detrend_slope_original / 2
         output_cycle = model_pred.flatten()
         if smooth:
-            output_cycle2 = np.array([item * normal_std_smooth + normal_mean_smooth for item in output_cycle])
+            output_cycle2 = [item * normal_std_smooth + normal_mean_smooth for item in output_cycle]
         else:
-            output_cycle2 = np.array([item * normal_std_original + normal_mean_original for item in output_cycle])
+            output_cycle2 = [item * normal_std_original + normal_mean_original for item in output_cycle]
     else:
         print("Not all sequences are length 50, predicting every subsequence...")
         output_cycle = []
@@ -203,10 +204,24 @@ def cycle(sequences, folder_path):
             output_cycle2 = [item * normal_std_original + normal_mean_original for item in output_cycle]
 
     if smooth:
-        ret = {"C0S_norm": output_cycle,
-               "C0S_unnorm": output_cycle2}
+        ret = []
+        for i in range(len(output_cycle)):
+            cur_length = 1 if all50 else len(output_cycle[i])
+            df = pd.DataFrame({
+                "position": np.arange(25, 25 + cur_length),
+                "C0S_norm": output_cycle[i],
+                "C0S_unnorm": output_cycle2[i]
+            })
+            ret.append(df)
     else:
-        ret = {"C0_norm": output_cycle,
-               "C0_unnorm": output_cycle2}
-
-    return ret
+        ret = []
+        for i in range(len(output_cycle)):
+            cur_length = 1 if all50 else len(output_cycle[i])
+            df = pd.DataFrame({
+                "position": np.arange(25, 25 + cur_length),
+                "C0_norm": output_cycle[i],
+                "C0_unnorm": output_cycle2[i]
+            })
+            ret.append(df)
+    ret2 = [ret, output_cycle, output_cycle2]
+    return ret2

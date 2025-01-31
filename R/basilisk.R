@@ -1,5 +1,5 @@
 #' @importFrom basilisk BasiliskEnvironment
-env1 <- BasiliskEnvironment("env1", pkgname="dnacycp",
+env1 <- BasiliskEnvironment("env1", pkgname="DNAcycP2",
                             packages=c(
                                 'python==3.11',
                                 'pandas==2.1.2',
