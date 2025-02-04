@@ -12,7 +12,7 @@ Authors@R:
         email = "jzwang@northwestern.edu", 
         role = c("aut", "cre"),
         comment = c(ORCID="0000-0002-8398-939X"))
-Description: This package performs prediction of intrinsic cyclizability of of every 50-bp subsequence in a DNA sequence.
+Description: This package performs prediction of intrinsic cyclizability of of every 50-bp subsequence in a DNA sequence. The input could be a file either in FASTA or text format. The output will be the C-score, the estimated intrinsic cyclizability score for each 50 bp sequences in each entry of the sequence set.  
 Depends: R (>= 4.4.0)
 Imports:
   basilisk,
