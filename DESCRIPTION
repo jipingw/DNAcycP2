@@ -25,7 +25,7 @@ StagedInstall: yes
 BinaryFiles: inst/extdata/irlstm/saved_model.pb, inst/extdata/irlstm_smooth/saved_model.pb
 biocViews: NeuralNetwork, StructuralPrediction
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown, BiocGenerics, RUnit
+Suggests: knitr, rmarkdown, BiocGenerics, RUnit, tinytest
 LazyData: false
 URL:
 BugReports: https://github.com/jipingw/DNAcycP2
