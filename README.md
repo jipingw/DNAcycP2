@@ -7,7 +7,7 @@ DNAcycP2 R package
 
 **Cite DNAcycP2 package**:
 
-Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, 2025
+Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, 2025
 
 
 ## What is DNAcycP2?
@@ -19,7 +19,7 @@ DNAcycP2 is an updated version of the earlier **DNAcycP** tool released by Li et
 
 ## Key differences between DNAcycP2 and DNAcycP
 
-Following the release of DNAcycP, it was found that the intrinsic cyclizability scores derived from Basu et al. (2021) retained residual bias from the biotin effect, resulting in inaccuracies (Kendall et al., 2005). To address this, we employed a data augmentation + moving average smoothing method to produce unbiased estimates of intrinsic DNA cyclizability for each sequence in the original training dataset. A new model, trained on this corrected data but using the same architecture as DNAcycP, was developed, resulting in DNAcycP2. This version also introduces improved computational efficiency through parallelization options. Further details are available in Kendall et al. (2025).
+Following the release of DNAcycP, it was found that the intrinsic cyclizability scores derived from Basu et al. (2021) retained residual bias from the biotin effect, resulting in inaccuracies (Kendall et al., 2025). To address this, we employed a data augmentation + moving average smoothing method to produce unbiased estimates of intrinsic DNA cyclizability for each sequence in the original training dataset. A new model, trained on this corrected data but using the same architecture as DNAcycP, was developed, resulting in DNAcycP2. This version also introduces improved computational efficiency through parallelization options. Further details are available in Kendall et al. (2025).
 
 To demonstrate the differences, we compared predictions from DNAcycP and DNAcycP2 in a yeast genomic region at base-pair resolution (Figure 1). The predicted biotin-dependent scores ($\tilde C_{26}$, $\tilde C_{29}$, and $ \tilde C_{31}$, model trained separately) show 10-bp periodic oscillations due to biotin biases, each with distinct phases. DNAcycP's predictions improved over the biotin-dependent scores, while still show substantial
 local fluctuations likely caused by residual bias in the training data (the called intrinsic cyclizability score $\hat C_0$ from Basu et al. 2021). In contrast, DNAcycP2, trained on corrected intrinsic cyclizability scores, produces much smoother local-scale predictions, indicating a further improvement in removing the biotin bias.
@@ -31,7 +31,7 @@ The DNAcycP2 package retains all prediction functions from the original DNAcycP.
 
 ## Available formats of DNAcycP2 and DNAcycP
 
-DNAcycP2 is available in three formats: A web server available at http://DNAcycP.stats.northwestern.edu for real-time prediction and visualization of C-score up to 20K bp, a standalone Python package avilable for free download from https://github.com/jipingw/DNAcycP2-Python, and a new R package available for free download from bioconductor (https://github.com/jipingw/DNAcycP2).
+DNAcycP2 is available in three formats: A web server available at http://DNAcycP.stats.northwestern.edu for real-time prediction and visualization of C-score up to 20K bp, a standalone Python package avilable for free download from https://github.com/jipingw/DNAcycP2-Python, and a new R package will be available for free download from bioconductor ( as well as from https://github.com/jipingw/DNAcycP2).
 
 
 

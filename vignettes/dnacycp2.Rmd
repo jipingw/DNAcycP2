@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 **References for methods**:
 
-TODO: Update citation when applicable
+Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, 2025.
 
 ****************************
 
