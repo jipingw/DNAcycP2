@@ -3,7 +3,7 @@ title: "DNAcycP2: **DNA** **Cyc**lizability **P**rediction v**2**"
 author: "Brody Kendall, Ji-Ping Wang, and Keren Li"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_document:
+    BiocStyle::html_document:
         highlight: pygments
         toc: true
         fig_width: 5
