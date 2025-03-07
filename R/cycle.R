@@ -100,8 +100,7 @@ cycle <- function(sequences, smooth, save_path_prefix="") {
 #' @examples
 #' # Create a temporary file
 #' temp_file <- tempfile(fileext = ".fasta")
-#' writeLines(">1", temp_file)
-#' writeLines("ACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC", temp_file)
+#' writeLines(">1\nACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTCACTGCTAGTC", temp_file)
 #'
 #' # Example usage of cycle_fasta
 #' cycle_fasta(temp_file, smooth=TRUE)
