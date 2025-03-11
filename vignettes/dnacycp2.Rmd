@@ -3,7 +3,7 @@ title: "DNAcycP2: **DNA** **Cyc**lizability **P**rediction v**2**"
 author: "Brody Kendall, Ji-Ping Wang, and Keren Li"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_document:
+    BiocStyle::html_document:
         highlight: pygments
         toc: true
         fig_width: 5
@@ -31,6 +31,8 @@ Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: impro
 
 ****************************
 
+## Introduction
+
 **DNAcycP2**, short for **DNA** **cyc**lizability **P**rediction v**2**, is an 
 R package (Python version is also available) developed for precise and unbiased 
 prediction of DNA intrinsic cyclizability scores. This tool builds on a deep 
@@ -45,7 +47,7 @@ accuracy when compared with experimentally measured cyclizability scores
 obtained from the loop-seq assay. This makes DNAcycP2 a valuable tool for 
 researchers studying DNA mechanics and structure.
 
-## Key differences between DNAcycP2 and DNAcycP
+### Key differences between DNAcycP2 and DNAcycP
 
 Following the release of DNAcycP, it was found that the intrinsic cyclizability 
 scores derived from Basu et al. (2021) retained residual bias from the biotin 
@@ -73,7 +75,7 @@ The DNAcycP2 package retains all prediction functions from the original
 DNAcycP. The improved prediction model, based on smoothed data, can be accessed 
 using the argument smooth=TRUE in the main function (see usage below).
 
-## Available formats of DNAcycP2 and DNAcycP
+### Available formats of DNAcycP2 and DNAcycP
 
 DNAcycP2 is available in three formats: A web server available at 
 http://DNAcycP.stats.northwestern.edu for real-time prediction and 
@@ -88,10 +90,16 @@ https://github.com/jipingw/DNAcycP.
 As DNAcycP2 include all functionalities of DNAcycP, users can generate all 
 DNAcycP results using DNAcycP2.
 
-## DNAcycP2 required R packages
+## Installation
 
-* `basilisk`
-* `reticulate`
+DNAcycP2 is available on Bioconductor with `R >= 4.5.0`. To install it, run the
+following command:
+
+```{r, eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DNAcycP2")
+```
 
 ## Usage
 
