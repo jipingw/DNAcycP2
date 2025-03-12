@@ -7,10 +7,10 @@ DNAcycP2 R package
 
 **Cite DNAcycP2 package**:
 
-Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, 2025
+Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, gkaf145, 2025
 
 
-## What is DNAcycP2?
+## Introduction
 
 **DNAcycP2**, short for **DNA** **cyc**lizability **P**rediction v**2**, is an R package (Python version is also available) developed for precise and unbiased prediction of DNA intrinsic cyclizability scores. This tool builds on a deep learning framework that integrates Inception and Residual network architectures with an LSTM layer, providing a robust and accurate prediction mechanism.
 
@@ -51,10 +51,11 @@ The core of DNAcycP2 is a deep learning architecture mixed with an Inception-Res
 
 Current best practice is to install via `devtools` and github:
 
-```r
-devtools::install_github("brodykendall/DNAcycP2")
+```{r, eval = FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("DNAcycP2")
 ```
-
 
 ## Usage
 
@@ -104,11 +105,98 @@ ex1_original <- DNAcycP2::cycle_fasta(ex1_file,smooth=FALSE,n_cores=2,chunk_leng
 ```r
 ex2_file <- system.file("extdata", "ex2.txt", package = "DNAcycP2")
 ex2 <- read.csv(ex2_file, header = FALSE)
-ex2_smooth <- dnacycp::cycle(ex2$V1, smooth=TRUE)
-ex2_original <- dnacycp::cycle(ex2$V1, smooth=FALSE)
+ex2_smooth <- DNAcycP2::cycle(ex2$V1, smooth=TRUE)
+ex2_original <- DNAcycP2::cycle(ex2$V1, smooth=FALSE)
 ```
 
 `cycle` takes the sequences themselves as input where ex2.txt is a text file with each line as a DNA sequence. We first read the file (`ex2_file`) and then provide the sequences as input (`ex2$V1`)
+
+### Example 3 (Single Sequence):
+
+If you want the predict C-scores for a single sequence, you can follow 
+the same protocol as Example 1 or 2, depending on the input format. We 
+have included two example files representing the same 1000bp stretch of 
+S. Cerevisiae sacCer3 Chromosome I (1:1000) in .fasta and .txt format.
+
+First, we will consider the .fasta format:
+
+```{r}
+ex3_fasta_file <- system.file(
+    "extdata", "ex3_single_seq.fasta", package = "DNAcycP2"
+)
+ex3_fasta_smooth <- DNAcycP2::cycle_fasta(ex3_fasta_file,smooth=TRUE)
+ex3_fasta_original <- DNAcycP2::cycle_fasta(ex3_fasta_file,smooth=FALSE)
+```
+
+The output (`ex3_fasta_smooth` or `ex3_fasta_original`) is a list with
+1 entry named "cycle_1".
+
+Let's say we are interested only in the smooth (DNAcycP2), normalized
+predictions for the subsequence defined by the first 100bp 
+(corresponding to subsequences defined by regions [1,50], [2,51],
+..., and [51-100], or `position`s 25, 26, ..., and 75). We can 
+access the outputs for this subsequence using the following command:
+
+```{r}
+ex3_fasta_smooth[[1]][1:51,c("position", "C0S_norm")]
+```
+
+Or, equivalently,
+
+```{r}
+ex3_fasta_smooth$cycle_1[1:51,c("position", "C0S_norm")]
+```
+
+Next, we will consider the .txt format:
+
+```{r}
+ex3_txt_file <- system.file(
+    "extdata", 
+    "ex3_single_seq.txt", 
+    package = "DNAcycP2"
+)
+ex3_txt <- read.csv(ex3_txt_file, header = FALSE)
+ex3_txt_smooth <- DNAcycP2::cycle(ex3_txt$V1, smooth=TRUE)
+ex3_txt_original <- DNAcycP2::cycle(ex3_txt$V1, smooth=FALSE)
+```
+
+The output (`ex3_txt_smooth` or `ex3_txt_original`) is a list with 1 entry 
+(unnamed).
+
+Note, that `ex3_fasta_smooth` and `ex3_txt_smooth` are essentially equivalent. 
+The only exceptions are perhaps slight rounding differences that come from the 
+computation, and that the list `ex3_fasta_smooth` has named entries ('cycle_1') 
+while `ex3_txt_smooth` does not. The same applies for `ex3_fasta_original` and 
+`ex3_txt_original`.
+
+Therefore, we can use a similar command to access the outputs for our 
+subsequence of interest:
+
+```r
+ex3_txt_smooth[[1]][1:51,c("position", "C0S_norm")]
+```
+
+If there is a sequence (or group of sequences) we want to make predictions on, 
+we can also input them directly as strings. For example:
+
+```r
+input_seq1 = 
+    "CATGACTGCAGCTAAAACGTTGACCTAGTCGTCAGTCTACGTACTAGCGTAGCTATATCGAGTCTAGCGTCTAG"
+input_seq2 = "ATCTTTTGTATATCAAAAGACTAGATCGATTAGCGTACGCCCCTGACTAGATAGATCG"
+seq1_smooth = DNAcycP2::cycle(c(input_seq1), smooth=TRUE)
+both_seqs_smooth = DNAcycP2::cycle(c(input_seq1, input_seq2), smooth=TRUE)
+```
+
+### Example 4: `DNAStringSet` object input
+
+```{r}
+library(Biostrings)
+ex4_string_set <- readDNAStringSet(system.file("extdata", "ex1.fasta", package="DNAcycP2"))
+ex4_smooth_output <- DNAcycP2::cycle(ex4_string_set, smooth=TRUE)
+```
+
+`ex4_string_set` here is a `DNAStringSet` object using `readDNAStringSet` function from 
+`Biostrings` package.
 
 ### DNAcycP2 output -- Normalized vs unnormalized
 

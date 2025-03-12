@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 **References for methods**:
 
-Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, 2025.
+Kendall, B., Jin, C., Li, K., Ruan, F., Wang, X.A., Wang, J.-P., DNAcycP2: improved estimation of intrinsic DNA cyclizability through data augmentation, *Nucleic Acids Research*, gkaf145, 2025.
 
 ****************************
 
@@ -181,8 +181,7 @@ three columns. The first column is always `position`. When `smooth=TRUE`, the
 second and third columns are `C0S_norm` and `C0S_unnorm`, and when 
 `smooth=FALSE` the second and third columns are `C0_norm` and `C0_unnorm`. 
 
-### Prediction on a list/vector of sequences
-
+### Example 2: input as a list/vector of sequences
 
 ```{r}
 ex2_file <- system.file("extdata", "ex2.txt", package = "DNAcycP2")
@@ -333,6 +332,20 @@ input_seq2 = "ATCTTTTGTATATCAAAAGACTAGATCGATTAGCGTACGCCCCTGACTAGATAGATCG"
 seq1_smooth = DNAcycP2::cycle(c(input_seq1), smooth=TRUE)
 both_seqs_smooth = DNAcycP2::cycle(c(input_seq1, input_seq2), smooth=TRUE)
 ```
+
+### Example 4: `DNAStringSet` object input
+
+```{r}
+library(Biostrings)
+ex4_string_set <- readDNAStringSet(system.file("extdata", "ex1.fasta", package="DNAcycP2"))
+ex4_smooth_output <- DNAcycP2::cycle(ex4_string_set, smooth=TRUE)
+```
+
+`ex4_string_set` here is a `DNAStringSet` object using `readDNAStringSet` function from 
+`Biostrings` package.
+
+
+
 
 ## References
 
